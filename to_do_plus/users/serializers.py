@@ -1,13 +1,27 @@
+import email
 from logging import PlaceHolder
 from wsgiref import validate
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from rest_framework import serializers
 
-class LoginSerializer(serializers.ModelSerializer):
+class LoginSerializer(serializers.Serializer):
     password=serializers.CharField(style={"input_type":"password", "placeholder":"Password"})
-    class Meta:
-        model=User
-        fields=['id', 'username' , 'email', 'password']
+    login=serializers.CharField(style={'placeholder': 'Username or Password'})
+    
+    def log_in(self, data):
+        
+        user=authenticate(username=data['login'], password=data['password'])
+        if user is None:
+            user=User.objects.get(email=data['login'])
+            
+            if user is not None:
+                if user.check_password(data['password']):
+                    return user
+            
+        
+        return user
+        
 
 
 class RegisterSerializer(serializers.Serializer):

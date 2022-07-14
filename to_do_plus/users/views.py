@@ -4,7 +4,7 @@ from rest_framework import generics, status, mixins
 from rest_framework.response import Response
 from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
 from django.contrib.auth.models import User
-
+from django.contrib.auth import login
 # Create your views here.
 
 
@@ -24,6 +24,11 @@ class LoginList(generics.GenericAPIView):
         print("POST")
         serializer=LoginSerializer(data=request.data)
         if serializer.is_valid():
+            user=serializer.log_in(request.data)
+            if user is None:
+                return Response(status.HTTP_404_NOT_FOUND)
+            
+            login(request, user)
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

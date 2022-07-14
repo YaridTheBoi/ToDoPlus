@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from rest_framework import generics, status, mixins
+
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from .models import Task
 from .serializers import TaskSerializer
 
@@ -24,7 +24,9 @@ class TaskList (generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateMod
 
 
     def get(self, request):
-        return self.list(request)
+        if request.user.is_authenticated:
+            return self.list(request)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
     #https://stackoverflow.com/questions/42346200/django-rest-add-data-to-serializer-when-saving przyda sie przy tworzeniu posta
