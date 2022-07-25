@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
+from pytz import NonExistentTimeError
 from rest_framework import generics, status, mixins
 
 from rest_framework.response import Response
 from .models import Task
-from .serializers import TaskSerializer
+from .serializers import TaskSerializer, CreateTaskSerializer
 
 
 # Create your views here.
@@ -13,26 +14,32 @@ def main(request):
 
 class TaskList (generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
     
-    serializer_class=TaskSerializer
+    serializer_class=CreateTaskSerializer
 
-    def get_queryset(self):
-        queryset=Task.objects.all()
-        author_id = self.request.query_params.get('author_id')
-        if author_id is not None:
-            queryset=queryset.filter(author_id=author_id)
-        return queryset
+    
+    
+    
+    queryset=Task.objects.all()
+        
+
 
 
     def get(self, request):
         if request.user.is_authenticated:
-            return self.list(request)
+            tasks= self.queryset
+            tasks=tasks.filter(author_id=request.user.id)
+            serializer=TaskSerializer(tasks, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
     #https://stackoverflow.com/questions/42346200/django-rest-add-data-to-serializer-when-saving przyda sie przy tworzeniu posta
     def post(self, request):
-        return self.create(request)
-
+        serializer=CreateTaskSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.create(request)
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class TaskDetailed(generics.GenericAPIView):
     queryset=Task.objects.all()

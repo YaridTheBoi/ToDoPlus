@@ -2,6 +2,7 @@ from email.policy import default
 from pickle import FALSE
 from django.db import models
 from django.forms import CharField
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Task(models.Model):

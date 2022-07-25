@@ -1,20 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from rest_framework import generics, status, mixins
 from rest_framework.response import Response
 from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 # Create your views here.
 
 
-'''def login(request):
-    return HttpResponse("Login Page")
-'''
 
-'''def register(request):
-    return HttpResponse("Register Page")'''
-
+def LogoutView(request):
+    
+    if request.user.is_authenticated:
+        logout(request)
+        return redirect('/')
+    return redirect('/login')
 
 class LoginList(generics.GenericAPIView):
     queryset=User.objects.all()
@@ -53,3 +53,7 @@ class RegisterList(generics.GenericAPIView, mixins.ListModelMixin):
             
             return Response(status=status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
