@@ -20,6 +20,6 @@ class CreateTaskSerializer(serializers.ModelSerializer):
         val_data=request.data
         task=Task.objects.create(title=val_data['title'],
                                 description=val_data['description'],
-                                author_id= request.user.id)
+                                author_id= request.user)
     
         task.save()
