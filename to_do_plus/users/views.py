@@ -5,6 +5,9 @@ from rest_framework.response import Response
 from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
+
+from django.conf import settings
+from django.core.mail import send_mail
 # Create your views here.
 
 
@@ -49,8 +52,13 @@ class RegisterList(generics.GenericAPIView, mixins.ListModelMixin):
     def post(self, request):
         serializer=RegisterSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.create(serializer.validate(request.data))
-            
+            newUser=serializer.create(serializer.validate(request.data))
+            send_mail(
+                subject='Register Confirmation',
+                message='Tutaj bedzie token i tak fajnie bedzie',
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[newUser.email]
+            )
             return Response(status=status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
