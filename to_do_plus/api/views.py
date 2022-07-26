@@ -16,9 +16,6 @@ class TaskList (generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateMod
     
     serializer_class=CreateTaskSerializer
 
-    
-    
-    
     queryset=Task.objects.all()
         
 

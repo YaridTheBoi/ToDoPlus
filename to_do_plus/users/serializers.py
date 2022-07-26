@@ -13,11 +13,15 @@ class LoginSerializer(serializers.Serializer):
         
         user=authenticate(username=data['login'], password=data['password'])
         if user is None:
-            user=User.objects.get(email=data['login'])
-            
-            if user is not None:
-                if user.check_password(data['password']):
-                    return user
+
+            try:
+                user=User.objects.get(email=data['login'])
+            except:
+                return None
+        
+            if user.check_password(data['password']):
+                return user
+            return None
             
         
         return user
