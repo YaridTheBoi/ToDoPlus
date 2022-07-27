@@ -8,6 +8,8 @@ from django.contrib.auth import login, logout
 
 from django.conf import settings
 from django.core.mail import send_mail
+
+#from rest_framework.authtoken.models import Token
 # Create your views here.
 
 
@@ -53,9 +55,10 @@ class RegisterList(generics.GenericAPIView, mixins.ListModelMixin):
         serializer=RegisterSerializer(data=request.data)
         if serializer.is_valid():
             newUser=serializer.create(serializer.validate(request.data))
+            #token, created=Token.objects.get_or_create(user=newUser)
             send_mail(
                 subject='Register Confirmation',
-                message='Tutaj bedzie token i tak fajnie bedzie',
+                message='Token: ',              #+ str(token.key),
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[newUser.email]
             )

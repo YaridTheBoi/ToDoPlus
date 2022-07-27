@@ -23,6 +23,8 @@ class TaskList (generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateMod
 
     def get(self, request):
         if request.user.is_authenticated:
+                
+
             tasks= self.queryset
             tasks=tasks.filter(author_id__id=request.user.id)
             serializer=TaskSerializer(tasks, many=True)
