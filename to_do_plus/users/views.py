@@ -9,7 +9,9 @@ from django.contrib.auth import login, logout
 from django.conf import settings
 from django.core.mail import send_mail
 
-#from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.models import Token
+
+from django.urls import reverse
 # Create your views here.
 
 
@@ -55,10 +57,11 @@ class RegisterList(generics.GenericAPIView, mixins.ListModelMixin):
         serializer=RegisterSerializer(data=request.data)
         if serializer.is_valid():
             newUser=serializer.create(serializer.validate(request.data))
-            #token, created=Token.objects.get_or_create(user=newUser)
+            token, created=Token.objects.get_or_create(user=newUser)
+            link=request.META['HTTP_HOST']+reverse('verify-register', args=[token.key, newUser.id])
             send_mail(
                 subject='Register Confirmation',
-                message='Token: ',              #+ str(token.key),
+                message='Token: '+ link,
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[newUser.email]
             )
@@ -66,5 +69,13 @@ class RegisterList(generics.GenericAPIView, mixins.ListModelMixin):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-
+class VerifyRegister(generics.GenericAPIView):
+    def get(self, request, token, user_id):
+        user=User.objects.get(id=user_id)
+        tokenFromUser=Token.objects.get(user=user)
+        if(token==tokenFromUser.key):
+            user.is_active=True
+            user.save()
+            return Response(status=status.HTTP_200_OK)
+        return Response(status.HTTP_404_NOT_FOUND)
 
