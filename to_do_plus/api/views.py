@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from pytz import NonExistentTimeError
 from rest_framework import generics, status, mixins
 
@@ -19,12 +19,8 @@ class TaskList (generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateMod
     queryset=Task.objects.all()
         
 
-
-
     def get(self, request):
         if request.user.is_authenticated:
-                
-
             tasks= self.queryset
             tasks=tasks.filter(author_id__id=request.user.id)
             serializer=TaskSerializer(tasks, many=True)
@@ -36,9 +32,12 @@ class TaskList (generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateMod
     def post(self, request):
         serializer=CreateTaskSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.create(request)
-            return Response(status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            data=serializer.create(request)
+            if(data==None):
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+            return HttpResponseRedirect('/myTasks')
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class TaskDetailed(generics.GenericAPIView):
     queryset=Task.objects.all()
@@ -68,28 +67,3 @@ class TaskDetailed(generics.GenericAPIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-'''
-
-
-@api_view(['DELETE'])
-def removeTaskById(request, id):
-    try:
-        task= Task.objects.get(id=id)
-    except Task.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-
-    task.delete()
-    return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
-
-
-@api_view(['POST'])
-def createTask(request):
-    serializer=TaskSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)'''

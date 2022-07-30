@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import  redirect
 from django.http import HttpResponse, Http404
 from rest_framework import generics, status, mixins
 from rest_framework.response import Response
-from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
+from .serializers import LoginSerializer, RegisterSerializer, UserSerializer, ForgotPasswordSerializer
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 
@@ -36,7 +36,7 @@ class LoginList(generics.GenericAPIView):
                 return Response(status.HTTP_404_NOT_FOUND)
             
             login(request, user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -61,7 +61,7 @@ class RegisterList(generics.GenericAPIView, mixins.ListModelMixin):
             link=request.META['HTTP_HOST']+reverse('verify-register', args=[token.key, newUser.id])
             send_mail(
                 subject='Register Confirmation',
-                message='Token: '+ link,
+                message='Token: '+ link ,
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[newUser.email]
             )
@@ -79,3 +79,28 @@ class VerifyRegister(generics.GenericAPIView):
             return Response(status=status.HTTP_200_OK)
         return Response(status.HTTP_404_NOT_FOUND)
 
+class ForgotPassword(generics.GenericAPIView):
+    queryset=User.objects.all()
+    serializer_class=ForgotPasswordSerializer
+    def post(self, request):
+        serializer=ForgotPasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            userForgotPassword=serializer.verify(serializer.data)
+            if userForgotPassword is None:
+                return Response(status.HTTP_404_NOT_FOUND)
+
+            token, created=Token.objects.get_or_create(user=userForgotPassword)
+            link=request.META['HTTP_HOST']+reverse('reset-password', args=[token.key, userForgotPassword.id])
+            send_mail(
+                subject='n',
+                message='Token: '+ link ,
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[userForgotPassword.email]
+            )
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+                
+
+class ResetPassword(generics.GenericAPIView):
+    def get(self,request, token, user_id):
+        return HttpResponse("Reset pass: "+ token+ " user id: "+ str(user_id))

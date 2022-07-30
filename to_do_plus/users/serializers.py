@@ -10,24 +10,14 @@ class LoginSerializer(serializers.Serializer):
     login=serializers.CharField(style={'placeholder': 'Username or Email'})
     
     def log_in(self, data):
-        
         user=authenticate(username=data['login'], password=data['password'])
         if user is None:
-            
             try:
                 userFromMail=User.objects.get(email=data['login'])
             except:
                 return None
-            
             user=authenticate(username=userFromMail.username, password=data['password'])
-        
-        '''
-            if user.check_password(data['password']):
-                return user
-            return None
-        '''
-            
-        
+    
         return user
         
 
@@ -62,3 +52,13 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
         fields=['id', 'username', 'email']
+
+class ForgotPasswordSerializer(serializers.Serializer):
+    email=serializers.EmailField(style={'placeholder': 'Email'})
+    
+    def verify(self, data):
+        user=User.objects.get(email=data['email'])
+
+        return user
+
+    
