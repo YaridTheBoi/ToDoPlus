@@ -55,10 +55,17 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ForgotPasswordSerializer(serializers.Serializer):
     email=serializers.EmailField(style={'placeholder': 'Email'})
-    
     def verify(self, data):
         user=User.objects.get(email=data['email'])
-
         return user
+
+class ResetPasswordSerializer(serializers.Serializer):
+    password=serializers.CharField(style={'input_type': 'password', 'placeholder': 'New Password'})
+    password2=serializers.CharField(style={'input_type': 'password', 'placeholder': 'Repeat New Password'})
+
+    def validate(self, data):
+        if(data['password']!=data['password2']):
+            raise serializers.ValidationError({'password': "Passwords aren't the same"})
+        return data['password']
 
     

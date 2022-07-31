@@ -2,7 +2,7 @@ from django.shortcuts import  redirect
 from django.http import HttpResponse, Http404
 from rest_framework import generics, status, mixins
 from rest_framework.response import Response
-from .serializers import LoginSerializer, RegisterSerializer, UserSerializer, ForgotPasswordSerializer
+from .serializers import LoginSerializer, RegisterSerializer, UserSerializer, ForgotPasswordSerializer, ResetPasswordSerializer
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 
@@ -21,7 +21,7 @@ def LogoutView(request):
     if request.user.is_authenticated:
         logout(request)
         return redirect('/')
-    return redirect('/login')
+    return redirect('/users/login')
 
 class LoginList(generics.GenericAPIView):
     queryset=User.objects.all()
@@ -92,7 +92,7 @@ class ForgotPassword(generics.GenericAPIView):
             token, created=Token.objects.get_or_create(user=userForgotPassword)
             link=request.META['HTTP_HOST']+reverse('reset-password', args=[token.key, userForgotPassword.id])
             send_mail(
-                subject='n',
+                subject='Reset Password',
                 message='Token: '+ link ,
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[userForgotPassword.email]
@@ -102,5 +102,24 @@ class ForgotPassword(generics.GenericAPIView):
                 
 
 class ResetPassword(generics.GenericAPIView):
-    def get(self,request, token, user_id):
-        return HttpResponse("Reset pass: "+ token+ " user id: "+ str(user_id))
+    queryset=User.objects.all()
+    serializer_class=ResetPasswordSerializer
+    def post(self,request, token, user_id):
+        
+        user=User.objects.get(id=user_id)
+        if(user is None):
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        tokenOfUser=Token.objects.get(user=user)
+        if(tokenOfUser.key!=token):
+            return Response(status=status.HTTP_405)
+
+        serializer=ResetPasswordSerializer(data=request.data)
+
+        user.set_password(serializer.validate(request.data))
+
+
+        
+        user.save()
+        return redirect('/users/login')
+
