@@ -10,7 +10,7 @@ from .serializers import TaskSerializer, CreateTaskSerializer
 
 # Create your views here.
 def main(request):
-    return HttpResponse("Main Page")
+    return render(request, 'api/index.html')
 
 class TaskList (generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
     
@@ -24,7 +24,7 @@ class TaskList (generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateMod
             tasks= self.queryset
             tasks=tasks.filter(author_id__id=request.user.id)
             serializer=TaskSerializer(tasks, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK, template_name='myTasks.html')
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 

@@ -63,7 +63,7 @@ ROOT_URLCONF = 'to_do_plus.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [r'/home/casper/ToDoPlus/to_do_plus/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
