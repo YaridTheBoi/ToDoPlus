@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from pytz import NonExistentTimeError
 from rest_framework import generics, status, mixins
-
+from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.renderers import TemplateHTMLRenderer
+
 from .models import Task
 from .serializers import TaskSerializer, CreateTaskSerializer
 
@@ -12,19 +14,19 @@ from .serializers import TaskSerializer, CreateTaskSerializer
 def main(request):
     return render(request, 'api/index.html')
 
-class TaskList (generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
+class TaskList (APIView):
     
     serializer_class=CreateTaskSerializer
-
     queryset=Task.objects.all()
-        
+    renderer_classes=[TemplateHTMLRenderer]
+    template_name='api/myTasks.html'
 
     def get(self, request):
         if request.user.is_authenticated:
             tasks= self.queryset
             tasks=tasks.filter(author_id__id=request.user.id)
             serializer=TaskSerializer(tasks, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK, template_name='myTasks.html')
+            return Response( {"serializer":serializer.data})
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
