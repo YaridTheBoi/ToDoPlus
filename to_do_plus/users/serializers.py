@@ -6,8 +6,9 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 
 class LoginSerializer(serializers.Serializer):
-    password=serializers.CharField(style={"input_type":"password", "placeholder":"Password"})
     login=serializers.CharField(style={'placeholder': 'Username or Email'})
+    password=serializers.CharField(style={"input_type":"password", "placeholder":"Password"})
+    
     
     def log_in(self, data):
         user=authenticate(username=data['login'], password=data['password'])
