@@ -8,6 +8,7 @@ from django.contrib.auth import login, logout
 
 from django.conf import settings
 from django.core.mail import send_mail
+from rest_framework.views import APIView
 
 from rest_framework.authtoken.models import Token
 
@@ -23,12 +24,12 @@ def LogoutView(request):
         return redirect('/')
     return redirect('/users/login')
 
-class LoginList(generics.GenericAPIView):
+class LoginList(APIView):
     queryset=User.objects.all()
     serializer_class=LoginSerializer
 
     def post(self, request):
-        print("POST")
+        print(request.data)
         serializer=LoginSerializer(data=request.data)
         if serializer.is_valid():
             user=serializer.log_in(request.data)
