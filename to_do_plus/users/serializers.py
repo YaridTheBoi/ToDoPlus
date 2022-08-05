@@ -11,6 +11,8 @@ class LoginSerializer(serializers.Serializer):
     
     
     def log_in(self, data):
+        print("\nIn log_in\n")
+        print(data)
         user=authenticate(username=data['login'], password=data['password'])
         if user is None:
             try:

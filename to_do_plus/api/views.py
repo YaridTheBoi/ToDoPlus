@@ -20,7 +20,7 @@ class TaskList (APIView):
 
 
     def get(self, request):
-        """
+        print(request.user)
         if request.user.is_authenticated:
             tasks= self.queryset
             tasks=tasks.filter(author_id__id=request.user.id)
@@ -32,7 +32,7 @@ class TaskList (APIView):
         tasks=tasks.filter(author_id__id=1)
         serializer=TaskSerializer(tasks, many=True)
         return Response( serializer.data)
-
+        """
     #https://stackoverflow.com/questions/42346200/django-rest-add-data-to-serializer-when-saving przyda sie przy tworzeniu posta
     def post(self, request):
         serializer=CreateTaskSerializer(data=request.data)

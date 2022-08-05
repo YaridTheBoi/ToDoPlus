@@ -29,15 +29,23 @@ class LoginList(APIView):
     serializer_class=LoginSerializer
 
     def post(self, request):
-        print(request.data)
+        print("POST\n")
+        #print(request.data)
         serializer=LoginSerializer(data=request.data)
         if serializer.is_valid():
+            
+            
             user=serializer.log_in(request.data)
+            #print("\nSERIALIZER VALID\n")
+            #print(user)
             if user is None:
                 return Response(status.HTTP_404_NOT_FOUND)
             
             login(request, user)
-            return Response(status=status.HTTP_200_OK)
+            response={"user_id": user.id}
+            print("response\n")
+            print(response)
+            return Response(response,status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
