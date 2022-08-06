@@ -1,5 +1,5 @@
 function getTasks(){
-    fetch("http://127.0.0.1:8000/myTasks")
+    fetch("http://127.0.0.1:8000/myTasks/"+ localStorage.getItem('token'))
     .then((response) => {
         return response.json()
     }).then((data)=>{

@@ -14,6 +14,7 @@ function postLogin(data){
     }).then((response) =>{
         return response.json()
     }).then((data)=>{
-        console.log(data)
+        localStorage.setItem("token", data.token)
+        //console.log(localStorage.getItem('token'))
     });
 }

@@ -36,13 +36,13 @@ class LoginList(APIView):
             
             
             user=serializer.log_in(request.data)
-            #print("\nSERIALIZER VALID\n")
-            #print(user)
+
             if user is None:
                 return Response(status.HTTP_404_NOT_FOUND)
             
             login(request, user)
-            response={"user_id": user.id}
+            token, created=Token.objects.get_or_create(user=user)
+            response={"token": token.key}
             print("response\n")
             print(response)
             return Response(response,status=status.HTTP_200_OK)
