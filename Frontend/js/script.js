@@ -10,6 +10,8 @@ function getTasks(){
 }
 
 function displayTasks(data){
+
+
     for (var i=0; i<data.length; i++){
         var element=document.getElementById("all-tasks")
         var task=document.createElement("div")

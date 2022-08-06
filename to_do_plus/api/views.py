@@ -22,8 +22,8 @@ class TaskList (APIView):
 
     def get(self, request, token):
         checkMe=User.objects.filter(auth_token=token).first()
-        print(checkMe)
-        print(token)
+        if(checkMe is None):
+            return Response(status=status.HTTP_404_NOT_FOUND)
         if checkMe.is_authenticated:
             tasks= self.queryset
             tasks=tasks.filter(author_id__id=checkMe.id)

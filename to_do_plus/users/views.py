@@ -1,3 +1,5 @@
+from secrets import token_bytes
+from tabnanny import check
 from django.shortcuts import  redirect
 from django.http import HttpResponse, Http404
 from rest_framework import generics, status, mixins
@@ -17,12 +19,17 @@ from django.urls import reverse
 
 
 
-def LogoutView(request):
-    
-    if request.user.is_authenticated:
-        logout(request)
-        return redirect('/')
-    return redirect('/users/login')
+class LogoutView(APIView):
+    def get(request, token):
+        checkMe=User.objects.filter(auth_token=token).first()
+        print(token)
+        print(checkMe)
+        if(checkMe is None):
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        if checkMe.is_authenticated:
+            logout(checkMe)
+            return Response(status=status.HTTP_200_OK)
+        return Response( status=status.HTTP_400_BAD_REQUEST)
 
 class LoginList(APIView):
     queryset=User.objects.all()

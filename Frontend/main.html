@@ -7,9 +7,10 @@
             To Do Plus
         </title>
         <link rel="stylesheet" href="/Frontend/css/main.css">
+        <script src="js/auth.js"></script>
     </head>
 
-    <body>
+    <body onload="checkLogin()">
         <div class="center-box">
                 <div class="my-header">
                     2 Do +
@@ -19,7 +20,7 @@
 
             <div class="link-list">
                 
-                <a href="/Frontend/login.html">LOGIN</a>
+                <a href="/Frontend/login.html" id="login-link">LOGIN</a>
                 <a href="">REGISTER</a>
                 <a href="/Frontend/myTasks.html">MY TASKS</a>
                 
