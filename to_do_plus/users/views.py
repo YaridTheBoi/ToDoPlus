@@ -15,19 +15,27 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 
 from django.urls import reverse
+
+from django.contrib.sessions.models import Session
 # Create your views here.
 
 
 
 class LogoutView(APIView):
-    def get(request, token):
+    def get(self ,request, token, session):
         checkMe=User.objects.filter(auth_token=token).first()
+        mySession=Session.objects.filter(session_key=session)
         print(token)
+        print(session)
+        print(request)
         print(checkMe)
+        
+        
         if(checkMe is None):
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         if checkMe.is_authenticated:
-            logout(checkMe)
+            #logout(session)
+            #tutaj zrob niszczenie mySession
             return Response(status=status.HTTP_200_OK)
         return Response( status=status.HTTP_400_BAD_REQUEST)
 
@@ -49,9 +57,11 @@ class LoginList(APIView):
             
             login(request, user)
             token, created=Token.objects.get_or_create(user=user)
-            response={"token": token.key}
-            print("response\n")
-            print(response)
+            
+
+
+            response={"token": token.key, "session":request.session.session_key}
+
             return Response(response,status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

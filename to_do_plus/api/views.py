@@ -21,6 +21,11 @@ class TaskList (APIView):
 
 
     def get(self, request, token):
+        
+        usr=User.objects.filter(username="YaridTheBoi").first()
+        print(usr)
+        print(usr.is_authenticated)
+        
         checkMe=User.objects.filter(auth_token=token).first()
         if(checkMe is None):
             return Response(status=status.HTTP_404_NOT_FOUND)

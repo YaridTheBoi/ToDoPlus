@@ -15,16 +15,19 @@ function postLogin(data){
         return response.json()
     }).then((data)=>{
         localStorage.setItem("token", data.token)
+        localStorage.setItem("session", data.session)
+        console.log(data)
         //console.log(localStorage.getItem('token'))
     });
 }
 
 function logout(){
     console.log("logging out")
-    fetch("http://127.0.0.1:8000/logout/"+ localStorage.getItem('token'))
+    console.log(localStorage.getItem('token'))
+    fetch("http://127.0.0.1:8000/users/logout/"+ localStorage.getItem('token')+"/"+localStorage.getItem('session'))
     .then((response)=>{
         console.log(response)
-        localStorage.setItem("token", null)
+        localStorage.setItem("token", "")
 
     })
 }
@@ -33,11 +36,14 @@ function checkLogin(){
     var loginLink=document.getElementById("login-link")
     console.log(localStorage.getItem('token') )
     
-    if(localStorage.getItem('token') != null){
+    if(localStorage.getItem('token') != ""){
         loginLink.innerHTML="LOGOUT"
-        loginLink.onclick=logout()
+        loginLink.addEventListener("click", logout)
+        
     }else{
         loginLink.innerHTML="LOGIN"
-        loginLink.onclick=""
+        loginLink.removeEventListener("click", logout)
     }
+
+    
 }
