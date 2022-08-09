@@ -1,7 +1,7 @@
 from secrets import token_bytes
 from tabnanny import check
 from django.shortcuts import  redirect
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpRequest
 from rest_framework import generics, status, mixins
 from rest_framework.response import Response
 from .serializers import LoginSerializer, RegisterSerializer, UserSerializer, ForgotPasswordSerializer, ResetPasswordSerializer
@@ -17,6 +17,7 @@ from rest_framework.authtoken.models import Token
 from django.urls import reverse
 
 from django.contrib.sessions.models import Session
+import json
 # Create your views here.
 
 
@@ -24,20 +25,14 @@ from django.contrib.sessions.models import Session
 class LogoutView(APIView):
     def get(self ,request, token, session):
         checkMe=User.objects.filter(auth_token=token).first()
-        mySession=Session.objects.filter(session_key=session)
-        print(token)
-        print(session)
-        print(request)
-        print(checkMe)
+        mySession=Session.objects.filter(session_key=session).first()
         
         
         if(checkMe is None):
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-        if checkMe.is_authenticated:
-            #logout(session)
-            #tutaj zrob niszczenie mySession
-            return Response(status=status.HTTP_200_OK)
-        return Response( status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(status=status.HTTP_200_OK)
+        
 
 class LoginList(APIView):
     queryset=User.objects.all()
@@ -45,24 +40,22 @@ class LoginList(APIView):
 
     def post(self, request):
         print("POST\n")
-        #print(request.data)
+    
         serializer=LoginSerializer(data=request.data)
         if serializer.is_valid():
             
-            
             user=serializer.log_in(request.data)
+            print(user)
 
-            if user is None:
-                return Response(status.HTTP_404_NOT_FOUND)
-            
-            login(request, user)
-            token, created=Token.objects.get_or_create(user=user)
-            
+            if (user is None):
+                print("Nie ma typa")
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            else:
 
-
-            response={"token": token.key, "session":request.session.session_key}
-
-            return Response(response,status=status.HTTP_200_OK)
+                token, created=Token.objects.get_or_create(user=user)
+                response={"token": token.key, "session":request.session}
+                return Response(response,status=status.HTTP_200_OK)
+        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
