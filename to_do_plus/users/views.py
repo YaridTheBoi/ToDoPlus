@@ -25,7 +25,7 @@ import json
 class LogoutView(APIView):
     def get(self ,request, token, session):
         checkMe=User.objects.filter(auth_token=token).first()
-        mySession=Session.objects.filter(session_key=session).first()
+        
         
         
         if(checkMe is None):
