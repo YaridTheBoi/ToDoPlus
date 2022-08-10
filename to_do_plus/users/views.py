@@ -25,9 +25,6 @@ import json
 class LogoutView(APIView):
     def get(self ,request, token, session):
         checkMe=User.objects.filter(auth_token=token).first()
-        
-        
-        
         if(checkMe is None):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -53,7 +50,7 @@ class LoginList(APIView):
             else:
 
                 token, created=Token.objects.get_or_create(user=user)
-                response={"token": token.key, "session":request.session}
+                response={"token": token.key}
                 return Response(response,status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
