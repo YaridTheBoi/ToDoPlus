@@ -12,12 +12,21 @@ function postLogin(data){
         headers: {'Content-type': 'application/json'},
         body: JSON.stringify(data)
     }).then((response) =>{
+        if(!response.ok){
+            throw Error (response.statusText)
+        }
         return response.json()
     }).then((data)=>{
         localStorage.setItem("token", data.token)
         localStorage.setItem("session", data.session)
         console.log(data)
+        window.location.href="/Frontend/main.html"
         //console.log(localStorage.getItem('token'))
+    }).catch((error)=> {
+        console.log("ZLE")
+        localStorage.setItem("token", "")
+        localStorage.setItem("session", "")
+        alert("")
     });
 }
 
