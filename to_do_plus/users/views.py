@@ -1,5 +1,6 @@
 from secrets import token_bytes
 from tabnanny import check
+from urllib import response
 from django.shortcuts import  redirect
 from django.http import HttpResponse, Http404, HttpRequest
 from rest_framework import generics, status, mixins
@@ -23,7 +24,7 @@ import json
 
 
 class LogoutView(APIView):
-    def get(self ,request, token, session):
+    def get(self ,request, token):
         checkMe=User.objects.filter(auth_token=token).first()
         if(checkMe is None):
             return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -74,6 +75,9 @@ class RegisterList(generics.GenericAPIView, mixins.ListModelMixin):
         if serializer.is_valid():
             newUser=serializer.create(serializer.validate(request.data))
             token, created=Token.objects.get_or_create(user=newUser)
+            response={"user_id":newUser.id, "token":token.key}
+
+            ''' 
             link=request.META['HTTP_HOST']+reverse('verify-register', args=[token.key, newUser.id])
             send_mail(
                 subject='Register Confirmation',
@@ -81,7 +85,9 @@ class RegisterList(generics.GenericAPIView, mixins.ListModelMixin):
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[newUser.email]
             )
-            return Response(status=status.HTTP_200_OK)
+            '''
+
+            return Response(response, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 

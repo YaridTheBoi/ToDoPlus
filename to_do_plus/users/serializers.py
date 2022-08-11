@@ -46,7 +46,7 @@ class RegisterSerializer(serializers.Serializer):
 
         user.set_password(val_data['password'])
         user.save()
-
+        #print("creating user:" + user.username)
         return user
 
 
