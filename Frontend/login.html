@@ -10,7 +10,7 @@
         <script src="js/auth.js"></script>
     </head>
 
-    <body>
+    <body onload="loadLogin()">
         <div class="center-box">
             <div class="my-header">
                 Login:
@@ -18,15 +18,14 @@
 
             
 
+            <form id="login-form" class='login-form'>
+                <label for="usernameField">Username/Email</label>
+                <input type="text" id="username-field" name="usernameField" required><br>
+                <label for="passwordField">Password</label>
+                <input type="password" id="password-field" name="passwordField" required><br>
+            </form>
 
-            <label for="usernameField">Username/Email</label>
-            <input type="text" id="username-field" name="usernameField" required><br>
-            <label for="passwordField">Password</label>
-            <input type="password" id="password-field" name="passwordField" required><br>
-            
-        
-
-            <button type="submit" form="login-form" onclick="loginClick()">Login</button>
+            <button type="submit" form="login-form">Login</button>
         </div>
         
         
