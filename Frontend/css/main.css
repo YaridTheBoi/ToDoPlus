@@ -83,6 +83,7 @@ label{
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    
 }
 
 button{
@@ -94,7 +95,8 @@ button{
     font-size: 100%;
     border: 3px solid rgb(97, 3, 141) ;
     border-radius: 10px;
-    margin-bottom: 3px;
+    margin-top:5%;
+    margin-bottom: 5%;
     width: 50%;
 
     color: rgb(97, 3, 141);

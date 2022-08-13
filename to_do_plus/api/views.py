@@ -36,7 +36,7 @@ class TaskList (APIView):
             return Response( serializer.data)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-    #https://stackoverflow.com/questions/42346200/django-rest-add-data-to-serializer-when-saving przyda sie przy tworzeniu posta
+  
     def post(self, request):
         serializer=CreateTaskSerializer(data=request.data)
         if serializer.is_valid():

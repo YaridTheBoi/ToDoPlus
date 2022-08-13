@@ -76,8 +76,8 @@ class RegisterList(APIView):
             newUser=serializer.create(serializer.validate(request.data))
             token, created=Token.objects.get_or_create(user=newUser)
             response={"user_id":newUser.id, "token":token.key}
-
-            ''' 
+            
+            
             link=request.META['HTTP_HOST']+reverse('verify-register', args=[token.key, newUser.id])
             send_mail(
                 subject='Register Confirmation',
@@ -85,17 +85,13 @@ class RegisterList(APIView):
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[newUser.email]
             )
-            '''
+        
 
             return Response(response, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class SendVerification(APIView):
-    def get(self, request, user_id):
-        print(request.META['HTTP_HOST'])
 
-        return Response(status=status.HTTP_200_OK)
     
 
 
@@ -108,8 +104,8 @@ class VerifyRegister(generics.GenericAPIView):
         if(token==tokenFromUser.key):
             user.is_active=True
             user.save()
-            return Response(status=status.HTTP_200_OK)
-        return Response(status.HTTP_404_NOT_FOUND)
+            return redirect("http://127.0.0.1:3003/Frontend/main.html")
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 class ForgotPassword(generics.GenericAPIView):
     queryset=User.objects.all()

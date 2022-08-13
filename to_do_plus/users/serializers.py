@@ -30,8 +30,7 @@ class RegisterSerializer(serializers.Serializer):
     email=serializers.EmailField(style={'placeholder': 'Email'})
     password=serializers.CharField(style={'input_type':'password', 'placeholder': 'Password'})
     password2=serializers.CharField(style={'input_type':'password', 'placeholder': 'Repeat Password'})
-
-
+   
     def validate(self, data):
         if(data['password']!= data['password2']):
             raise serializers.ValidationError({'password': "Passwords aren't the same"})
@@ -46,7 +45,6 @@ class RegisterSerializer(serializers.Serializer):
 
         user.set_password(val_data['password'])
         user.save()
-        #print("creating user:" + user.username)
         return user
 
 
