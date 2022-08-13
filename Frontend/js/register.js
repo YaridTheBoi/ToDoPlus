@@ -38,11 +38,28 @@ function postRegister(data){
         return response.json()
     }).then((data)=>{
 
-        console.log(data)
+        console.log(data.user_id)
 
-
+        return fetch("http://127.0.0.1:8000/users/send-verification/"+data.user_id)
+    }).then((response)=>{
+        if(!response.ok){
+            console.log("bad")
+        }else{
+            console.log("ok")
+        }
     }).catch((error)=> {
         console.log(error.body)
 
     });
+}
+
+function sendVerification(id){
+    fetch("http://127.0.0.1:8000/users/send-verification/"+ str(id))
+    .then((response)=>{
+        if(!response.ok){
+            console.log("bad")
+        }else{
+            console.log("ok")
+        }
+    })
 }

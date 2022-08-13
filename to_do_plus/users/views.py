@@ -57,7 +57,7 @@ class LoginList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class RegisterList(generics.GenericAPIView, mixins.ListModelMixin):
+class RegisterList(APIView):
     queryset=User.objects.all()
     serializer_class=RegisterSerializer
 
@@ -89,6 +89,16 @@ class RegisterList(generics.GenericAPIView, mixins.ListModelMixin):
 
             return Response(response, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class SendVerification(APIView):
+    def get(self, request, user_id):
+        print(request.META['HTTP_HOST'])
+
+        return Response(status=status.HTTP_200_OK)
+    
+
+
 
 
 class VerifyRegister(generics.GenericAPIView):
