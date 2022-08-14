@@ -3,6 +3,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     font-family: Arial, Helvetica, sans-serif;
     
 }
@@ -20,6 +21,62 @@ a{
     font-size: 8vw;
     margin-top: 2.5vh;
     font-weight: bolder;
+    
+}
+
+.task-title{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: rgb(97, 3, 141);
+    font-size: auto;
+    margin: 1vh;
+    height:40%;
+    font-weight: bolder;
+}
+.task-description{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-size: auto;
+    width:100%;
+    box-sizing: border-box;
+
+    height:30%;
+    
+    background-color: rgb(247, 246, 248);
+}
+.task-card{
+    width: 50vw;
+    height: 25vh;
+    border: 3px solid rgb(97, 3, 141) ;
+    border-radius: 25px;
+    background-color: rgb(204, 191, 218);
+    margin: 2vh 2vh 0vh 0vh;
+    display: flex;
+    flex-direction: column;
+    
+}
+.task-create{
+    border-radius: 25px;
+    
+    width: 45%;
+    
+    
+    top: 35vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgb(204, 191, 218);
+    border: 3px solid rgb(97, 3, 141) ;
+}
+.task-date{
+    font-size: small;
+    text-align: left;
+    margin: 5%;
     
 }
 .link-list{

@@ -42,9 +42,9 @@ class TaskList (APIView):
         print(request.data)
         if serializer.is_valid():
             data=serializer.create(request, token)
-            print('\n serializer is valid\n')
+           
             if(data==None):
-                print('\n data is none\n')
+              
                 return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
 
             return HttpResponseRedirect('/myTasks/'+str(token))
