@@ -2,7 +2,7 @@ from dataclasses import field
 from statistics import mode
 from rest_framework import serializers
 from .models import Task
-
+from django.contrib.auth.models import User
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model=Task
@@ -20,12 +20,13 @@ class CreateTaskSerializer(serializers.ModelSerializer):
 
 
 
-    def create(self, request):
+    def create(self, request, token):
         val_data=request.data
+        author= User.objects.filter(auth_token=token).first()
         try:
             task=Task.objects.create(title=val_data['title'],
                                     description=val_data['description'],
-                                    author_id= request.user)
+                                    author_id= author)
         except:
             return None
         task.save()

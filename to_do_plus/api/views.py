@@ -21,11 +21,11 @@ class TaskList (APIView):
 
 
     def get(self, request, token):
-        
+        """
         users=User.objects.filter(id__gte=2)
         print("deleting: "+ str(users.count))
         users.delete()
-        
+        """
         checkMe=User.objects.filter(auth_token=token).first()
         if(checkMe is None):
             return Response(status=status.HTTP_404_NOT_FOUND)
@@ -37,14 +37,17 @@ class TaskList (APIView):
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
   
-    def post(self, request):
+    def post(self, request, token):
         serializer=CreateTaskSerializer(data=request.data)
+        print(request.data)
         if serializer.is_valid():
-            data=serializer.create(request)
+            data=serializer.create(request, token)
+            print('\n serializer is valid\n')
             if(data==None):
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                print('\n data is none\n')
+                return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
 
-            return HttpResponseRedirect('/myTasks')
+            return HttpResponseRedirect('/myTasks/'+str(token))
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class TaskDetailed(generics.GenericAPIView):
