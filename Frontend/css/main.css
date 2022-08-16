@@ -21,6 +21,7 @@ a{
     font-size: 8vw;
     margin-top: 2.5vh;
     font-weight: bolder;
+    text-align: center;
     
 }
 
@@ -31,7 +32,6 @@ a{
     justify-content: center;
     color: rgb(97, 3, 141);
     font-size: auto;
-    margin: 1vh;
     height:40%;
     font-weight: bolder;
 }
@@ -43,7 +43,7 @@ a{
     font-size: auto;
     width:100%;
     box-sizing: border-box;
-
+    
     height:30%;
     
     background-color: rgb(247, 246, 248);
@@ -54,7 +54,7 @@ a{
     border: 3px solid rgb(97, 3, 141) ;
     border-radius: 25px;
     background-color: rgb(204, 191, 218);
-    margin: 2vh 2vh 0vh 0vh;
+    margin: 2vh 0vh 2vh  0vh;
     display: flex;
     flex-direction: column;
     
@@ -98,7 +98,7 @@ a{
     width: 45%;
     height: auto;
     position: relative;
-    top: 35vh;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -127,12 +127,33 @@ input{
 
 label{
 
-    
     color: rgb(255, 255, 255);
     font-size: large;
     font-weight: bolder;
 }
 
+.container{
+    top: 35vh;
+    height:100%;
+    width:100%;
+    position: relative;
+    background-color: aqua;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.popup{
+    border-radius: 25px;
+    
+
+    justify-content: center;
+    background-color: rgb(204, 191, 218);
+    border: 3px solid rgb(97, 3, 141) ;
+    position:absolute;
+    z-index: 9;
+}
 
 .login-form{
     width: 95%;
@@ -148,7 +169,7 @@ button{
     background: rgb(247, 246, 248);
     transition: 0.75s;
 
-    height: 3.5vh;
+    height: auto;
     font-size: 100%;
     border: 3px solid rgb(97, 3, 141) ;
     border-radius: 10px;
