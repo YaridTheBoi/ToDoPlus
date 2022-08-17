@@ -56,15 +56,14 @@ a{
     background-color: rgb(204, 191, 218);
     margin: 2vh 0vh 2vh  0vh;
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
     
 }
 .task-create{
     border-radius: 25px;
-    
     width: 45%;
-    
-    
     top: 35vh;
     display: flex;
     align-items: center;
@@ -73,6 +72,8 @@ a{
     background-color: rgb(204, 191, 218);
     border: 3px solid rgb(97, 3, 141) ;
 }
+
+
 .task-date{
     font-size: small;
     text-align: left;
@@ -145,12 +146,12 @@ label{
 }
 
 .popup{
-    border-radius: 25px;
+    
     
 
     justify-content: center;
-    background-color: rgb(204, 191, 218);
-    border: 3px solid rgb(97, 3, 141) ;
+    
+    
     position:absolute;
     z-index: 9;
 }
