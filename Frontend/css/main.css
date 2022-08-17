@@ -1,3 +1,4 @@
+/*BASICS*/
 body{
     background-color: rgb(247, 246, 248);
     display: flex;
@@ -16,6 +17,58 @@ a{
     font-weight: bolder;
 
 }
+
+input{
+    width: 100%;
+    height: 3vh;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 3px solid rgb(97, 3, 141) ;
+    border-radius: 10px;
+    
+}
+
+label{
+
+    color: rgb(255, 255, 255);
+    font-size: large;
+    font-weight: bolder;
+}
+
+button{
+
+    background: rgb(247, 246, 248);
+    transition: 0.75s;
+
+    height: auto;
+    font-size: 100%;
+    border: 3px solid rgb(97, 3, 141) ;
+    border-radius: 10px;
+    margin-top:5%;
+    margin-bottom: 5%;
+    width: 50%;
+
+    color: rgb(97, 3, 141);
+    font-weight: bolder;
+}
+
+button:hover{
+    background: rgb(97, 3, 141);
+    border: 3px solid rgb(247, 246, 248);
+    color: rgb(247, 246, 248);
+}
+
+form{
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+
+/*FOR TASKS*/
 .my-header{
     color: rgb(97, 3, 141);
     font-size: 8vw;
@@ -43,11 +96,11 @@ a{
     font-size: auto;
     width:100%;
     box-sizing: border-box;
-    
     height:30%;
-    
     background-color: rgb(247, 246, 248);
 }
+
+
 .task-card{
     width: 50vw;
     height: 25vh;
@@ -55,22 +108,10 @@ a{
     border-radius: 25px;
     background-color: rgb(204, 191, 218);
     margin: 2vh 0vh 2vh  0vh;
+
     display: flex;
-    align-items: center;
     justify-content: center;
     flex-direction: column;
-    
-}
-.task-create{
-    border-radius: 25px;
-    width: 45%;
-    top: 35vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background-color: rgb(204, 191, 218);
-    border: 3px solid rgb(97, 3, 141) ;
 }
 
 
@@ -80,8 +121,46 @@ a{
     margin: 5%;
     
 }
-.link-list{
+
+/*contains create-form in myTasks.html*/
+.task-create{
+    border-radius: 25px;
+
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgb(204, 191, 218);
+    border: 3px solid rgb(97, 3, 141) ;
     
+}
+
+/*contains all tasks in myTasks.html*/
+.task-area{
+    width:100%;
+}
+
+
+/*used in myTasks.html makes create-form stay on top of page when scrolling*/
+.stay-on-top{
+    display: flex;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: rgb(247, 246, 248);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    position: sticky;
+    top:0%;
+    z-index:10;
+}
+
+/*OTHER*/
+
+/*used on main page. holds hyperlinks to various endpoints*/
+.link-list{
     padding: 4%;
     width:100%;
     box-sizing: border-box;
@@ -90,16 +169,16 @@ a{
     display: flex;
     align-items: center;
     justify-content: center;
-    
     background-color: rgb(247, 246, 248);
 }
+
+
 .center-box{
-    border-radius: 25px;
-    
+    border-radius: 25px;    
     width: 45%;
     height: auto;
     position: relative;
-    
+    transition: all .25s ease-in-out;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,82 +187,35 @@ a{
     border: 3px solid rgb(97, 3, 141) ;
 }
 
-input{
-    width: 100%;
-    height: 3vh;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    
-    border: 3px solid rgb(97, 3, 141) ;
-    border-radius: 10px;
-    
-}
 
 .invalid-input{
-
-    border: 3px solid rgb(141, 3, 33) ;
-
+    border: 3px solid rgb(141, 3, 33);
 }
 
-label{
 
-    color: rgb(255, 255, 255);
-    font-size: large;
-    font-weight: bolder;
-}
-
+/*allows to display various div on eachother*/
 .container{
-    top: 35vh;
-    height:100%;
+    margin-top: 1px;
+    height:auto;
     width:100%;
     position: relative;
     background-color: aqua;
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
+    
 }
 
+/*div with that class shows above sibling*/
 .popup{
-    
-    
-
     justify-content: center;
-    
-    
+    transition: all .5s ease-in;
     position:absolute;
     z-index: 9;
 }
 
-.login-form{
-    width: 95%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    
-}
 
-button{
 
-    background: rgb(247, 246, 248);
-    transition: 0.75s;
 
-    height: auto;
-    font-size: 100%;
-    border: 3px solid rgb(97, 3, 141) ;
-    border-radius: 10px;
-    margin-top:5%;
-    margin-bottom: 5%;
-    width: 50%;
 
-    color: rgb(97, 3, 141);
-    font-weight: bolder;
-}
 
-button:hover{
-    background: rgb(97, 3, 141);
-    border: 3px solid rgb(247, 246, 248);
-    color: rgb(247, 246, 248);
-}

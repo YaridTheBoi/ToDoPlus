@@ -13,11 +13,15 @@ function displayTasks(data){
 
     const element=document.getElementById("all-tasks")
     for (let i=0; i<data.length; i++){
-        
+        let cont=document.createElement("div")
+        cont.classList.add("container")
+
         let task=document.createElement("div")
         task.classList.add("task-card")
+
         let title=document.createElement("h1")
         title.classList.add("task-title")
+
         let title_text=document.createTextNode(data[i].title)
         let description=document.createTextNode( data[i].description)
         let date=document.createTextNode( data[i].create_date)
@@ -34,8 +38,8 @@ function displayTasks(data){
         
         p2.appendChild(date)
         task.appendChild(p2)
+        cont.appendChild(task)
 
-
-        element.appendChild(task)
+        element.appendChild(cont)
     }
 }

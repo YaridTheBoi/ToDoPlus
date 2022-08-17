@@ -11,22 +11,25 @@
     </head>
 
     <body>
-        <div class="center-box">
-            <div class="my-header">
-                Login:
+        <div class="container" style="top: 35vh">
+            <div class="center-box">
+                <div class="my-header">
+                    Login:
+                </div>
+
+                
+
+                <form id="login-form">
+                    <label for="usernameField">Username/Email</label>
+                    <input type="text" id="username-field" name="usernameField" required><br>
+                    <label for="passwordField">Password</label>
+                    <input type="password" id="password-field" name="passwordField" required><br>
+                </form>
+
+                <button type="submit" form="login-form">Login</button>
             </div>
-
-            
-
-            <form id="login-form" class='login-form'>
-                <label for="usernameField">Username/Email</label>
-                <input type="text" id="username-field" name="usernameField" required><br>
-                <label for="passwordField">Password</label>
-                <input type="password" id="password-field" name="passwordField" required><br>
-            </form>
-
-            <button type="submit" form="login-form">Login</button>
         </div>
+
         
         
         <script src="js/login.js"></script>
