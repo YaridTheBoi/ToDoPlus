@@ -208,6 +208,7 @@ form{
 
 /*div with that class shows above sibling*/
 .popup{
+    opacity:0;
     justify-content: center;
     transition: all .5s ease-in;
     position:absolute;

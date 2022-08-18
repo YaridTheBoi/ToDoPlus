@@ -1,4 +1,5 @@
-
+const username=document.getElementById("username-field");
+const password=document.getElementById("password-field");
 const loginFrom= document.getElementById('login-form')
 loginFrom.addEventListener("submit", function(e){
     e.preventDefault()
@@ -8,9 +9,8 @@ loginFrom.addEventListener("submit", function(e){
 
 function loginClick(){
     
-    const username=document.getElementById("username-field").value;
-    const password=document.getElementById("password-field").value;
-    let result={"login":username, "password":password};
+
+    let result={"login":username.value, "password":password.value};
     console.log(JSON.stringify(result))
     postLogin(result)
 }
@@ -23,8 +23,13 @@ function postLogin(data){
         body: JSON.stringify(data)
     }).then((response) =>{
         if(!response.ok){
+            
+            username.classList.add('invalid-input')
+            password.classList.add('invalid-input')
             throw Error (response.statusText)
         }
+        username.classList.remove('invalid-input')
+        password.classList.remove('invalid-input')
         return response.json()
     }).then((data)=>{
         localStorage.setItem("token", data.token)
@@ -34,6 +39,7 @@ function postLogin(data){
     }).catch((error)=> {
         console.log(error)
         localStorage.setItem("token", "")
+
         //window.alert("Incorrect password or username")
     });
 }
