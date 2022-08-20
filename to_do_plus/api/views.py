@@ -55,23 +55,23 @@ class TaskDetailed(generics.GenericAPIView):
     serializer_class=TaskSerializer
 
 
-    def get_task_by_id(self, id,token):
+    def get_task_by_id(self, id):
         try:
             return Task.objects.get(id=id)
         except Task.DoesNotExist:
             raise Http404
 
-    def get(self, request, id, format=None):
+    def get(self, request, token, id, format=None):
         tasks= self.get_task_by_id(id)
         serializer=TaskSerializer(tasks)
         return Response(serializer.data)
 
-    def delete(self, request, id, format=None):
+    def delete(self, request,token, id, format=None):
         task=self.get_task_by_id(id)
         task.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def put(self, request, id, format=None):
+    def put(self, request,token, id, format=None):
         task=self.get_task_by_id(id)
         serializer=TaskSerializer(task, data=request.data)
         if serializer.is_valid():

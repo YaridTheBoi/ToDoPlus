@@ -8,6 +8,25 @@ fetch("http://127.0.0.1:8000/myTasks/"+ localStorage.getItem('token'))
 })
 
 
+async function checkboxClick(id, task){
+    let cBox=document.getElementById(id)
+    task.is_done=!task.is_done
+    const response= await fetch("http://127.0.0.1:8000/myTasks/"+ localStorage.getItem('token')+"/"+id, {
+        method: "PUT",
+        headers:{'Content-type': 'application/json'},
+        body: JSON.stringify(task)
+    })
+    
+    if(!response.ok){
+        throw Error(response.statusText)
+    }
+    const data= await response.json();
+    console.log(data)
+    cBox.checked=data.is_done
+    
+
+}
+
 
 function displayTasks(data){
 
@@ -22,13 +41,25 @@ function displayTasks(data){
         let title=document.createElement("h1")
         title.classList.add("task-title")
 
+        let checkbox = document.createElement("input")
+        checkbox.setAttribute("type", "checkbox")
+        checkbox.setAttribute("id", data[i].id)
+        checkbox.checked=data[i].is_done
+        checkbox.addEventListener('change', function(e){
+            
+            checkboxClick(checkbox.id, data[i])
+        })
+
         let title_text=document.createTextNode(data[i].title)
         let description=document.createTextNode( data[i].description)
         let date=document.createTextNode( data[i].create_date)
         let p=document.createElement("p")
         p.classList.add("task-description")
-        let p2=document.createElement("p")
-        p2.classList.add("task-date")
+        let p2=document.createElement("div")
+        p2.classList.add("task-foot")
+        
+        let p3=document.createElement("div")
+        p3.classList.add("task-foot")
 
         title.appendChild(title_text)
         task.appendChild(title)
@@ -37,7 +68,11 @@ function displayTasks(data){
         task.appendChild(p)
         
         p2.appendChild(date)
+        p3.appendChild(checkbox)
+
         task.appendChild(p2)
+        task.appendChild(p3)
+
         cont.appendChild(task)
 
         element.appendChild(cont)
