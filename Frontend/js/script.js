@@ -82,7 +82,7 @@ function displayTasks(data){
 
         let col2=document.createElement("div")
         col2.classList.add("column")
-        col2.classList.add("task-checkbox")
+
 
         title.appendChild(title_text)
         task.appendChild(title)
