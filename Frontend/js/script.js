@@ -1,3 +1,13 @@
+const element=document.getElementById("all-tasks")
+const taskForm=document.getElementById("task-form")
+
+taskForm.addEventListener("submit", function(e){
+    e.preventDefault()
+    console.log("poszlo")
+    createTask()
+})
+
+
 
 fetch("http://127.0.0.1:8000/myTasks/"+ localStorage.getItem('token'))
 .then((response) => {
@@ -7,6 +17,13 @@ fetch("http://127.0.0.1:8000/myTasks/"+ localStorage.getItem('token'))
     displayTasks(data);
 })
 
+
+async function createTask(){
+    let title=taskForm.elements["taskField"]
+    let desc=taskForm.elements["descriptionField"]
+    task={'title': title.value, 'description':desc.value }
+    console.log(JSON.stringify(task))
+}
 
 async function checkboxClick(id, task){
     let cBox=document.getElementById(id)
@@ -30,7 +47,7 @@ async function checkboxClick(id, task){
 
 function displayTasks(data){
 
-    const element=document.getElementById("all-tasks")
+    
     for (let i=0; i<data.length; i++){
         let cont=document.createElement("div")
         cont.classList.add("container")
@@ -55,11 +72,17 @@ function displayTasks(data){
         let date=document.createTextNode( data[i].create_date)
         let p=document.createElement("p")
         p.classList.add("task-description")
-        let p2=document.createElement("div")
-        p2.classList.add("task-foot")
         
-        let p3=document.createElement("div")
-        p3.classList.add("task-foot")
+        let row=document.createElement("div")
+        row.classList.add("row")
+        
+        let col1=document.createElement("div")
+        col1.classList.add("column")
+        col1.classList.add("task-date")
+
+        let col2=document.createElement("div")
+        col2.classList.add("column")
+        col2.classList.add("task-checkbox")
 
         title.appendChild(title_text)
         task.appendChild(title)
@@ -67,11 +90,14 @@ function displayTasks(data){
         p.appendChild(description)
         task.appendChild(p)
         
-        p2.appendChild(date)
-        p3.appendChild(checkbox)
+        col1.appendChild(date)
+        col2.appendChild(checkbox)
 
-        task.appendChild(p2)
-        task.appendChild(p3)
+        row.appendChild(col1);
+        row.appendChild(col2);
+
+        task.appendChild(row)
+        
 
         cont.appendChild(task)
 

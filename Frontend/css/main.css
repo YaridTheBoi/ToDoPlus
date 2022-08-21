@@ -86,30 +86,37 @@ form{
     font-weight: bolder;
 }
 .task-description{
+    display: flex;
     text-align: center;
+    justify-content: center;
+    align-items: center;
     width:100%;
     height:30%;
     background-color: rgb(247, 246, 248);
 }
 
-
+.task-checkbox{
+    margin-left: auto;
+    margin-right: 0;
+    
+}
 .task-card{
     width: 50vw;
-    height: auto;
+    height: 25vh;
     border: 3px solid rgb(97, 3, 141) ;
     border-radius: 25px;
     background-color: rgb(204, 191, 218);
     margin: 2vh 0vh 2vh  0vh;
 
     display: flex;
-    justify-content: center;
     flex-direction: column;
 }
 
 
-.task-foot{
+.task-date{
     width:auto;
     height:30%;
+    margin-left: 5%;
     margin-bottom: 5%;
     font-size: small;
     
@@ -152,7 +159,20 @@ form{
 }
 
 /*OTHER*/
+.row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-end;
+}
 
+.column{
+    display: flex;
+    flex-direction: column;
+    flex-basis:100%;
+    flex: 1;
+}
 /*used on main page. holds hyperlinks to various endpoints*/
 .link-list{
     padding: 4%;
