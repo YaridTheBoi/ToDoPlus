@@ -21,11 +21,8 @@ class TaskList (APIView):
 
 
     def get(self, request, token):
-        """
-        users=User.objects.filter(id__gte=2)
-        print("deleting: "+ str(users.count))
-        users.delete()
-        """
+
+        
         checkMe=User.objects.filter(auth_token=token).first()
         if(checkMe is None):
             return Response(status=status.HTTP_404_NOT_FOUND)

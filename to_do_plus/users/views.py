@@ -104,7 +104,7 @@ class VerifyRegister(generics.GenericAPIView):
         if(token==tokenFromUser.key):
             user.is_active=True
             user.save()
-            return redirect("http://127.0.0.1:3003/Frontend/main.html")
+            return redirect(settings.FRONTEND_URL+ "main.html")
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 class ForgotPassword(generics.GenericAPIView):
@@ -118,7 +118,8 @@ class ForgotPassword(generics.GenericAPIView):
                 return Response(status.HTTP_404_NOT_FOUND)
 
             token, created=Token.objects.get_or_create(user=userForgotPassword)
-            link=request.META['HTTP_HOST']+reverse('reset-password', args=[token.key, userForgotPassword.id])
+            link=settings.FRONTEND_URL+ f"resetPassword.html?token={token.key}&user_id={userForgotPassword.id}"
+            #link=request.META['HTTP_HOST']+reverse('reset-password', args=[token.key, userForgotPassword.id])
             send_mail(
                 subject='Reset Password',
                 message='Token: '+ link ,
