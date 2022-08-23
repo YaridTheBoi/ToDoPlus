@@ -1,14 +1,16 @@
+/*Components */
 const element=document.getElementById("all-tasks")
 const taskForm=document.getElementById("task-form")
 
+//when Create form is fine send request
 taskForm.addEventListener("submit", function(e){
     e.preventDefault()
-    console.log("poszlo")
+    
     createTask()
 })
 
 
-
+//download my tasks
 fetch("http://127.0.0.1:8000/myTasks/"+ localStorage.getItem('token'))
 .then((response) => {
     return response.json()
@@ -18,13 +20,25 @@ fetch("http://127.0.0.1:8000/myTasks/"+ localStorage.getItem('token'))
 })
 
 
+//send createe task request
 async function createTask(){
     let title=taskForm.elements["taskField"]
     let desc=taskForm.elements["descriptionField"]
     task={'title': title.value, 'description':desc.value }
-    console.log(JSON.stringify(task))
+    const response= await fetch("http://127.0.0.1:8000/myTasks/"+ localStorage.getItem('token'), {
+        method: "POST",
+        headers:{'Content-type': 'application/json'},
+        body: JSON.stringify(task)
+    })
+    
+    if(!response.ok){
+        throw Error(response.statusText)
+    }
+    const data= await response.json();
+
 }
 
+//send request with change task status
 async function checkboxClick(id, task){
     let cBox=document.getElementById(id)
     task.is_done=!task.is_done
@@ -44,11 +58,13 @@ async function checkboxClick(id, task){
 
 }
 
-
+//generate all tasks as task cards
 function displayTasks(data){
 
     
     for (let i=0; i<data.length; i++){
+
+        //============Create all needed elements============
         let cont=document.createElement("div")
         cont.classList.add("container")
 
@@ -58,21 +74,9 @@ function displayTasks(data){
         let title=document.createElement("h1")
         title.classList.add("task-title")
 
-        let checkbox = document.createElement("input")
-        checkbox.setAttribute("type", "checkbox")
-        checkbox.setAttribute("id", data[i].id)
-        checkbox.checked=data[i].is_done
-        checkbox.addEventListener('change', function(e){
-            
-            checkboxClick(checkbox.id, data[i])
-        })
-
-        let title_text=document.createTextNode(data[i].title)
-        let description=document.createTextNode( data[i].description)
-        let date=document.createTextNode( data[i].create_date)
         let p=document.createElement("p")
         p.classList.add("task-description")
-        
+
         let row=document.createElement("div")
         row.classList.add("row")
         
@@ -83,7 +87,27 @@ function displayTasks(data){
         let col2=document.createElement("div")
         col2.classList.add("column")
 
+        //============Checkbox generate with logic============
+        let checkbox = document.createElement("input")
+        checkbox.setAttribute("type", "checkbox")
+        checkbox.setAttribute("id", data[i].id)
+        checkbox.checked=data[i].is_done
+        checkbox.addEventListener('change', function(e){
+            
+            checkboxClick(checkbox.id, data[i])
+        })
 
+        //============Inject data============
+        let title_text=document.createTextNode(data[i].title)
+        let description=document.createTextNode( data[i].description)
+        let date=document.createTextNode( data[i].create_date)
+
+
+
+        
+
+
+        //============Connect components into task card============
         title.appendChild(title_text)
         task.appendChild(title)
 

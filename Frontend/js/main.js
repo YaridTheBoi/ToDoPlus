@@ -1,10 +1,15 @@
+
+//get login link component
 const loginLink=document.getElementById("login-link")
-console.log(localStorage.getItem('token') )
+//console.log(localStorage.getItem('token') )
+
+//function added to login link to change to logout
 const logoutHandler=function(e){
     e.preventDefault()
     logout()
 }
 
+//if there is token change login to logout
 if(localStorage.getItem('token') != ""){
     loginLink.innerHTML="LOGOUT"
     loginLink.addEventListener("click",logoutHandler)
@@ -12,7 +17,7 @@ if(localStorage.getItem('token') != ""){
 }
 
 
-
+//send logout request
 async function logout(){
     console.log("logging out")
     console.log(localStorage.getItem('token'))
