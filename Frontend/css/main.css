@@ -15,15 +15,21 @@ a{
     text-align: center;
     font-size: 2.5vw;
     font-weight: bolder;
-
+    text-decoration: none;
+    
 }
+
+a:link,a:visited{
+    color: rgb(97, 3, 141);
+}
+
 
 input{
     width: 100%;
     height: 3vh;
     align-items: center;
     justify-content: center;
-    
+    margin-bottom: 1.5vw;
     border: 3px solid rgb(97, 3, 141) ;
     border-radius: 10px;
     
@@ -41,7 +47,7 @@ button{
     background: rgb(247, 246, 248);
     transition: 0.75s;
 
-    height: auto;
+    min-height: 2vw;
     font-size: 100%;
     border: 3px solid rgb(97, 3, 141) ;
     border-radius: 10px;
@@ -72,7 +78,8 @@ form{
 .my-header{
     color: rgb(97, 3, 141);
     font-size: 8vw;
-    margin-top: 2.5vh;
+    margin-top: 2.5vw;
+    margin-bottom: 1.5vw;
     font-weight: bolder;
     text-align: center;
     
@@ -91,7 +98,7 @@ form{
     justify-content: center;
     align-items: center;
     width:100%;
-    
+    min-height: 120px;
     background-color: rgb(247, 246, 248);
 }
 

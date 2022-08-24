@@ -31,9 +31,10 @@ async function postLogin(data){
     }
     username.classList.remove('invalid-input')
     password.classList.remove('invalid-input')
-    let data= response.json()
-    localStorage.setItem("token", data.token)
-    console.log(data)
+    let responseData= await response.json()
+    console.log(responseData.token)
+    localStorage.setItem("token", responseData.token)
+    
     window.location.href="/Frontend/main.html"
         
 
