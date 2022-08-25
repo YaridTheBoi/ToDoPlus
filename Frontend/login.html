@@ -7,10 +7,11 @@
             To Do Plus
         </title>
         <link rel="stylesheet" href="css/main.css">
-        
+        <script src="https://kit.fontawesome.com/e52d4c2299.js" crossorigin="anonymous"></script>
     </head>
 
     <body style="height: 100vh;">
+        <i id="back-btn" class="fa-solid fa-angle-left fa-5x back-icon"></i>
         <div class="container">
             <div class="center-box">
                 <div class="my-header">
@@ -20,10 +21,19 @@
                 
 
                 <form id="login-form">
-                    <label for="usernameField">Username/Email</label>
-                    <input type="text" id="username-field" name="usernameField" required><br>
-                    <label for="passwordField">Password</label>
-                    <input type="password" id="password-field" name="passwordField" required><br>
+                    <div class="form-input">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="username-field" name="usernameField" placeholder="Username/Email" required><br>
+                    </div>
+
+                    <div class="form-input">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password-field" name="passwordField" placeholder="Password" required><br>
+                    </div>
+
+
+
+
                     <a href="forgotPassword.html">Forgot Password?</a>
                 </form>
 

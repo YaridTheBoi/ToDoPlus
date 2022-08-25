@@ -7,17 +7,25 @@
             To Do Plus
         </title>
         <link rel="stylesheet" href="css/main.css">
-        
+        <script src="https://kit.fontawesome.com/e52d4c2299.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
+       
         <div class="stay-on-top">
+            <i id="back-btn" class="fa-solid fa-angle-left fa-5x back-icon"></i>
             <div class="task-create">
                 <form id="task-form">
-                    <label for="taskField">Task</label>
-                    <input type="text" id="task-field" name="taskField" required><br>
-                    <label for="descriptionField">Description</label>
-                    <input type="text" id="decription-field" name="descriptionField" required><br>
+                    <div class="form-input">
+                        <i class="fa-solid fa-bars"></i>
+                        <input type="text" id="task-field" name="taskField" placeholder="Task Title" required><br>
+                    </div>
+
+                    <div class="form-input">
+                        <i class="fa-solid fa-comment"></i>
+                        <input type="text" id="decription-field" name="descriptionField" placeholder="Description" required><br>
+                    </div>
+
                 </form>
                 <button type="submit" form="task-form">Create</button>
             </div>

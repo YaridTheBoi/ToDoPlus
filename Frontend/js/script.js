@@ -9,6 +9,10 @@ taskForm.addEventListener("submit", function(e){
     createTask()
 })
 
+const backBtn=document.getElementById('back-btn')
+backBtn.addEventListener("click", function(e){
+    window.location.href="/Frontend/main.html"
+})
 
 //download my tasks
 fetch("http://127.0.0.1:8000/myTasks/"+ localStorage.getItem('token'))

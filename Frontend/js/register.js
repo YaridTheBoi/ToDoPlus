@@ -4,6 +4,10 @@ const username=document.getElementById('username-field')
 const email=document.getElementById('email-field')
 const password=document.getElementById('password-field')
 const repeatPassword=document.getElementById('repeatPassword-field')
+const backBtn=document.getElementById('back-btn')
+backBtn.addEventListener("click", function(e){
+    window.location.href="/Frontend/main.html"
+})
 
 //add logic to form when submited
 registerForm.addEventListener("submit", function(e){

@@ -3,6 +3,10 @@ const btn=document.getElementById("forgotPassword-form")
 const formDiv=document.getElementById("mainWindow")
 const succPop=document.getElementById("succPop")
 const input=document.getElementById("email-field")
+const backBtn=document.getElementById('back-btn')
+backBtn.addEventListener("click", function(e){
+    window.location.href="/Frontend/main.html"
+})
 
 //make popup disappear
 succPop.style.transform="scale(0)";

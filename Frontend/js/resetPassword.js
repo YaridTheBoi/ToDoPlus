@@ -13,6 +13,10 @@ const queryString= window.location.search
 const urlParams= new URLSearchParams(queryString)
 window.history.pushState({},"", '/Frontend/resetPassword.html')
 
+const backBtn=document.getElementById('back-btn')
+backBtn.addEventListener("click", function(e){
+    window.location.href="/Frontend/main.html"
+})
 
 //get reset password form and add logic to it
 const resetPasswordForm=document.getElementById("resetPassword-form")

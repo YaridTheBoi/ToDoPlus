@@ -1,6 +1,12 @@
 const username=document.getElementById("username-field");
 const password=document.getElementById("password-field");
 const loginFrom= document.getElementById('login-form')
+const backBtn=document.getElementById('back-btn')
+backBtn.addEventListener("click", function(e){
+    window.location.href="/Frontend/main.html"
+})
+
+
 loginFrom.addEventListener("submit", function(e){
     e.preventDefault()
     loginClick()
