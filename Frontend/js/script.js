@@ -96,6 +96,7 @@ function displayTasks(data){
         //============Checkbox generate with logic============
         let checkbox = document.createElement("input")
         checkbox.setAttribute("type", "checkbox")
+        checkbox.style.zIndex="20";
         checkbox.setAttribute("id", data[i].id)
         checkbox.checked=data[i].is_done
         checkbox.addEventListener('change', function(e){
@@ -172,6 +173,7 @@ function displayTasks(data){
         firstEditInputText.setAttribute("type", "text")
         firstEditInputText.setAttribute("id", "task-field")
         firstEditInputText.setAttribute("name", "taskField")
+        firstEditInputText.setAttribute("value", title_text.nodeValue)
         firstEditInputText.setAttribute("placeholder", "Task Title")
 
 
@@ -193,6 +195,7 @@ function displayTasks(data){
         secondEditInputText.setAttribute("type", "text")
         secondEditInputText.setAttribute("id", "description-field")
         secondEditInputText.setAttribute("name", "descriptionField")
+        secondEditInputText.setAttribute("value", description.nodeValue)
         secondEditInputText.setAttribute("placeholder", "Description")
 
 
@@ -213,14 +216,29 @@ function displayTasks(data){
         editExit.addEventListener("click", function(e){
             editPopup.style.opacity="0";
             editPopup.style.transform="scale(0)";
+            secondEditInputText.setAttribute("value", description.nodeValue)
+            firstEditInputText.setAttribute("value", title_text.nodeValue)
         } )
+
+
 
         //buttons
         let editButton=document.createElement("button")
         editButton.appendChild(document.createTextNode("Edit"))
+        editButton.addEventListener("click", function(e){
+            editTask(data[i], firstEditInputText.value, secondEditInputText.value)
+        })
+
 
         let removeButton=document.createElement("button")
         removeButton.appendChild(document.createTextNode("Remove"))
+        removeButton.addEventListener("click", function(e){
+            editPopup.style.opacity="0";
+            editPopup.style.transform="scale(0)";
+            task.style.opacity="0";
+            task.style.transform="scale(0)";
+            removeTask(data[i])
+        })
 
         let popupRow=document.createElement("div")
         popupRow.classList.add("row")
@@ -243,11 +261,16 @@ function displayTasks(data){
         //============Add event lsitener to task card============
 
         task.addEventListener("click", function(e){
-            console.log(task.id)
-            editPopup.style.opacity="1";
-            editPopup.style.transform="scale(1)";
-            editPopup.style.height="95%";
-            editPopup.style.width="60%";
+            
+            if(e.target.nodeName!="INPUT"){
+                editPopup.style.opacity="1";
+                editPopup.style.transform="scale(1)";
+                editPopup.style.height="95%";
+                editPopup.style.width="60%";
+            }
+
+            
+
         })
 
 
@@ -256,5 +279,33 @@ function displayTasks(data){
         cont.appendChild(task)
         cont.appendChild(editPopup)
         element.appendChild(cont)
+    }
+}
+
+async function editTask(task, newTitle, newDescription){
+
+    task.title=newTitle
+    task.description=newDescription
+    const response= await fetch("http://127.0.0.1:8000/myTasks/"+ localStorage.getItem('token')+"/"+task.id, {
+        method: "PUT",
+        headers:{'Content-type': 'application/json'},
+        body: JSON.stringify(task)
+    })
+    if(!response.ok){
+        throw Error(response.statusText)
+    }
+    const data= await response.json();
+    console.log(data)
+    
+}
+
+async function removeTask(task){
+    const response= await fetch("http://127.0.0.1:8000/myTasks/"+ localStorage.getItem('token')+"/"+task.id,{
+        method: "DELETE",
+        headers:{'Content-type': "application/json"},
+        body: JSON.stringify(task)
+    })
+    if (!response.ok){
+        throw Error(response.statusText)
     }
 }

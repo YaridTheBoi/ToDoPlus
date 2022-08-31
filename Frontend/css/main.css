@@ -57,15 +57,13 @@ button{
 
     background: rgb(247, 246, 248);
     transition: 0.75s;
-
     
+    width: 50%;
+    max-width: 150px;
     font-size: 100%;
     border: 3px solid rgb(97, 3, 141) ;
     border-radius: 10px;
-    
     margin: 5%;
-
-    width: 50%;
 
     color: rgb(97, 3, 141);
     
@@ -174,6 +172,7 @@ form{
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     padding: 20px;
 }
 
@@ -218,7 +217,7 @@ form{
     height:auto;
     width:100%;
     position: relative;
-    background-color: aqua;
+    /*background-color: aqua;*/
     display: flex;
     align-items: center;
     justify-content: center;
