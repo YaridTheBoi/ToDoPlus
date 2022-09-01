@@ -1,3 +1,9 @@
+//if there is no token redirect to login
+if(localStorage.getItem('token') == ""){
+    window.location.href="/Frontend/login.html"
+}
+
+
 /*Components */
 const element=document.getElementById("all-tasks")
 const taskForm=document.getElementById("task-form")
@@ -243,6 +249,7 @@ function displayTasks(data){
         let popupRow=document.createElement("div")
         popupRow.classList.add("row")
         popupRow.style.width="50%";
+        popupRow.style.justifyContent="center"
 
 
         //connect all stuff

@@ -15,7 +15,8 @@ a{
     margin-left: 5%;
     margin-right: 5%;
     text-align: center;
-    font-size: 2.5vw;
+    
+    font-size: calc(30px+ 2.5vw);
     text-decoration: none;
     
 }
@@ -60,6 +61,7 @@ button{
     
     width: 50%;
     max-width: 150px;
+    min-width: 75px;
     font-size: 100%;
     border: 3px solid rgb(97, 3, 141) ;
     border-radius: 10px;
@@ -88,7 +90,7 @@ form{
 /*FOR TASKS*/
 .my-header{
     color: rgb(97, 3, 141);
-    font-size: 8vw;
+    font-size:calc(30px + 8vw);
     margin-top: 2.5vw;
     margin-bottom: 1.5vw;
     
@@ -181,9 +183,10 @@ form{
 .link-list{
     padding: 4%;
     width:100%;
+    min-height: 70px;
     box-sizing: border-box;
     margin-top: 3vh;
-    margin-bottom: 2vh;;
+    margin-bottom: 4vw;;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -194,6 +197,8 @@ form{
 .center-box{
     border-radius: 25px;    
     width: 45%;
+    min-width: 300px;
+    min-height: 250px;
     height: auto;
     position: relative;
     transition: all .25s ease-in-out;
@@ -246,7 +251,6 @@ form{
 }
 
 .back-icon{
-    left: 70px;
     top: 40px;
 }
 

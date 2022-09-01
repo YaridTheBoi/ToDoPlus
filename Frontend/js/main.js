@@ -1,6 +1,8 @@
 
 //get login link component
 const loginLink=document.getElementById("login-link")
+
+const myTasksLink=document.getElementById("tasks-link")
 //console.log(localStorage.getItem('token') )
 
 //function added to login link to change to logout
@@ -9,11 +11,16 @@ const logoutHandler=function(e){
     logout()
 }
 
+const tasksRedirect=function(e){
+    e.preventDefault()
+    window.location.href="/Frontend/login.html"
+}
+
 //if there is token change login to logout
 if(localStorage.getItem('token') != ""){
     loginLink.innerHTML="LOGOUT"
     loginLink.addEventListener("click",logoutHandler)
-    
+    myTasksLink.removeEventListener("click", tasksRedirect)
 }
 
 
@@ -28,6 +35,7 @@ async function logout(){
         localStorage.setItem('token', "")
         loginLink.innerHTML="LOGIN"
         loginLink.removeEventListener("click",logoutHandler)
+        myTasksLink.addEventListener("click", tasksRedirect)
     }
     
     
