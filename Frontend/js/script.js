@@ -137,27 +137,6 @@ function displayTasks(data){
 
         task.appendChild(row)
 
-        //============Create popup============
-        /*
-            <div class="task-create">
-                <form id="task-form">
-                    <div class="form-input">
-                        <i class="fa-solid fa-bars"></i>
-                        <input type="text" id="task-field" name="taskField" placeholder="Task Title" required><br>
-                    </div>
-
-                    <div class="form-input">
-                        <i class="fa-solid fa-comment"></i>
-                        <input type="text" id="decription-field" name="descriptionField" placeholder="Description" required><br>
-                    </div>
-
-                </form>
-                <button type="submit" form="task-form">Create</button>
-            </div>
-
-
-        */
-
         //create popup
         let editPopup=document.createElement("div")
         editPopup.classList.add("popup")
@@ -280,7 +259,9 @@ function displayTasks(data){
 
         })
 
-
+        if(data[i].is_done){
+            task.style.opacity="0.3";
+        }
 
         //EventListener do task, popup do cont
         cont.appendChild(task)

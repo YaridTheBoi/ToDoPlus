@@ -37,16 +37,16 @@ class LoginList(APIView):
     serializer_class=LoginSerializer
 
     def post(self, request):
-        print("POST\n")
+        
     
         serializer=LoginSerializer(data=request.data)
         if serializer.is_valid():
             
             user=serializer.log_in(request.data)
-            print(user)
+            
 
             if (user is None):
-                print("Nie ma typa")
+                
                 return Response(status=status.HTTP_404_NOT_FOUND)
             else:
 
@@ -119,7 +119,7 @@ class ForgotPassword(generics.GenericAPIView):
 
             token, created=Token.objects.get_or_create(user=userForgotPassword)
             link=settings.FRONTEND_URL+ f"resetPassword.html?token={token.key}&user_id={userForgotPassword.id}"
-            #link=request.META['HTTP_HOST']+reverse('reset-password', args=[token.key, userForgotPassword.id])
+            
             send_mail(
                 subject='Reset Password',
                 message='Token: '+ link ,

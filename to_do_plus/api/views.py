@@ -20,10 +20,9 @@ class TaskList (APIView):
     queryset=Task.objects.all()
 
 
+    #get 
     def get(self, request, token):
-
-        
-        checkMe=User.objects.filter(auth_token=token).first()
+        checkMe=User.objects.filter(auth_token=token).first()       #user from url token
         if(checkMe is None):
             return Response(status=status.HTTP_404_NOT_FOUND)
         if checkMe.is_authenticated:
@@ -39,9 +38,7 @@ class TaskList (APIView):
         print(request.data)
         if serializer.is_valid():
             data=serializer.create(request, token)
-           
             if(data==None):
-              
                 return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
 
             return HttpResponseRedirect('/myTasks/'+str(token))
